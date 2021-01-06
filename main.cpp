@@ -89,9 +89,9 @@ auto lectura(std::string path) {
     while (csv.peek() != EOF) {
         getline(csv, line);
         line.erase(std::remove(line.begin(), line.end(), '\n'), line.end());
-        size_t position = line.find(";") + 1;
-        std::cout << "\n Esta es la linea \n" << line;
-        // std::string key_k = line.substr(0, line.find(";"));
+        //size_t position = line.find(";") + 1;
+        std::string key_k = line.substr(line.find("[")+1, line.find("]")-20);
+        std::cout << "\n EXTRACTO= " << key_k;
         // std::string key_v = line.substr(position);
         // key_k.erase(std::remove(key_k.begin(), key_k.end(), '\"'), key_k.end());
         // key_v.erase(std::remove(key_v.begin(), key_v.end(), '\"'), key_v.end());
