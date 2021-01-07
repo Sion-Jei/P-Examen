@@ -14,6 +14,14 @@ std::vector<int> vectore;
 std::map<int, int> user;
 std::list<double> list;
 
+std::string chrs (std::string pors) {
+    int porsi = std::stoi(pors);
+    if (porsi < 10) {
+        pors = "0" + pors;       
+    }
+    return pors;
+}
+
 std::map<int, unsigned int> counter(const std::vector<int>& vals) {
     std::map<int, unsigned int> rv;
 
@@ -31,7 +39,7 @@ void display(const std::map<int, unsigned int>& counts) {
     for (auto count = counts.begin(); count != counts.end(); ++count) {
         std::string key = std::to_string(count->first);
         std::string value = std::to_string(count->second);
-        line = key + ";" + value;
+        line = chrs(key) + ";" + value;
         csv << line << std::endl;
         //std::cout << "Value " << count->first << " has count "
         //          << count->second << std::endl;
