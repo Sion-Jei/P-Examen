@@ -9,7 +9,6 @@
 #include <map>
 #include <numeric>
 #include <math.h>
-#include <time.h>
 
 
 //std::map<double, double> smi;
@@ -20,26 +19,7 @@ std::list<double> list;
 //std::map<double, double> cash;
 //std::list<double> buff;
 
-//auto c_users(std::map<double, std::string> y) {
-auto c_users(std::vector<int> vec) {
-    int foo[]{1,1,1,1,4,6,4,7,4};
-    std::map<int, int> bar;
 
-    for (auto const &f : foo)
-        bar[f]++;
-
-    for (auto const &b : bar)
-        std::cout << "The number " << b.first 
-                  << "is repeated " << b.second 
-                  << "times\n";
-
-    std::cout << "\n";
-    // while (ys != y.end()) {
-    //     if(!) 
-    // }
-    return 0;
-    
-}
 //DANGEROUS ZONE DANGEROUS ZONE
 std::map<int, unsigned int> counter(const std::vector<int>& vals) {
     std::map<int, unsigned int> rv;
@@ -52,10 +32,18 @@ std::map<int, unsigned int> counter(const std::vector<int>& vals) {
 }
 
 void display(const std::map<int, unsigned int>& counts) {
+    std::ofstream csv;
+    csv.open("resultado.csv"); //abre archivo desde ruta
+    std::string line; //crea string para guardar linea de txt
     for (auto count = counts.begin(); count != counts.end(); ++count) {
+        std::string key = std::to_string(count->first);
+        std::string value = std::to_string(count->second);
+        line = key + ";" + value;
+        csv << line << std::endl;
         std::cout << "Value " << count->first << " has count "
                   << count->second << std::endl;
     }
+    csv.close();
 }
 
 // auto convertYear(std::map<double, double> y, std::map<std::string, double> d) {
@@ -125,10 +113,10 @@ void display(const std::map<int, unsigned int>& counts) {
 auto lectura(std::string path) {
     //std::map<double, std::string> map_tmp;
     std::vector<int> vec;
-    std::string file_path = path;
-    std::ifstream csv;
-    csv.open(file_path);
-    std::string line;
+    std::string file_path = path; //se crea ruta
+    std::ifstream csv; // crea variable para abrir txt
+    csv.open(file_path); //abre archivo desde ruta
+    std::string line; //crea string para guardar linea de txt
     //getline(csv, line);
     double sm = 0;
     while (csv.peek() != EOF) {
