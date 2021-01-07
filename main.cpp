@@ -9,11 +9,54 @@
 #include <map>
 #include <numeric>
 #include <math.h>
+#include <time.h>
+
 
 //std::map<double, double> smi;
-std::map <double, std::string> archivo;
+//std::map <double, std::string> archivo;
+std::vector<int> vectore;
+std::map<int, int> user;
+std::list<double> list;
 //std::map<double, double> cash;
 //std::list<double> buff;
+
+//auto c_users(std::map<double, std::string> y) {
+auto c_users(std::vector<int> vec) {
+    int foo[]{1,1,1,1,4,6,4,7,4};
+    std::map<int, int> bar;
+
+    for (auto const &f : foo)
+        bar[f]++;
+
+    for (auto const &b : bar)
+        std::cout << "The number " << b.first 
+                  << "is repeated " << b.second 
+                  << "times\n";
+
+    std::cout << "\n";
+    // while (ys != y.end()) {
+    //     if(!) 
+    // }
+    return 0;
+    
+}
+//DANGEROUS ZONE DANGEROUS ZONE
+std::map<int, unsigned int> counter(const std::vector<int>& vals) {
+    std::map<int, unsigned int> rv;
+
+    for (auto val = vals.begin(); val != vals.end(); ++val) {
+        rv[*val]++;
+    }
+
+    return rv;
+}
+
+void display(const std::map<int, unsigned int>& counts) {
+    for (auto count = counts.begin(); count != counts.end(); ++count) {
+        std::cout << "Value " << count->first << " has count "
+                  << count->second << std::endl;
+    }
+}
 
 // auto convertYear(std::map<double, double> y, std::map<std::string, double> d) {
 //     std::map<double, double> cash;
@@ -80,7 +123,8 @@ std::map <double, std::string> archivo;
 // }
 
 auto lectura(std::string path) {
-    std::map<double, std::string> map_tmp;
+    //std::map<double, std::string> map_tmp;
+    std::vector<int> vec;
     std::string file_path = path;
     std::ifstream csv;
     csv.open(file_path);
@@ -92,9 +136,17 @@ auto lectura(std::string path) {
         line.erase(std::remove(line.begin(), line.end(), '\n'), line.end());
         //size_t position = line.find(";") + 1;
         std::string ext = line.substr(line.find(":")+1, 2);
-        std::cout << "\n EXTRACTO= " << ext;
-        std::cout << "\n CONTADOR " << sm;
-        map_tmp.insert(std::pair<double, std::string>(sm, ext));
+        //std::cout << "\n EXTRACTO= " << ext;
+        //std::cout << "\n CONTADOR " << sm;
+        int exti = std::stoi(ext);
+        //std::vector<int> vec;
+        vec.push_back(exti);
+        // for (auto it = vec.begin(); it != vec.end(); ++it) 
+        //     std::cout << ' ' << *it;
+
+        //std::cout << "\n CONTADOR ENTERO " << sm;
+        //int foo[]{1,1,1,1,4,6,4,7,4};
+        //map_tmp.insert(std::pair<double, std::string>(sm, ext));
         // std::string key_v = line.substr(position);
         // key_k.erase(std::remove(key_k.begin(), key_k.end(), '\"'), key_k.end());
         // key_v.erase(std::remove(key_v.begin(), key_v.end(), '\"'), key_v.end());
@@ -103,15 +155,17 @@ auto lectura(std::string path) {
         sm +=1;
     }
     csv.close();
-    return map_tmp;    
+    //return map_tmp;
+    return vec;     
 }
 int main() {
 
     //smi = csv_smi("smi.csv");
-    archivo = lectura("prueba.txt");
-    //cash = convertYear(smi, dollars);
+    vectore = lectura("prueba.txt");
+    //user = c_users(vectore);
+    //c_users(vectore);
     //linearRegression(cash, 2001);
-
-    std::cout << "\n";
+    //std::vector<int> mem = {1, 1, 1, 1, 4, 6, 4, 7, 4};
+    display(counter(vectore));
     return 0;
 }
