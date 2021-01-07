@@ -11,7 +11,7 @@
 #include <math.h>
 
 //std::map<double, double> smi;
-std::map <std::string, double> archivo;
+std::map <double, std::string> archivo;
 //std::map<double, double> cash;
 //std::list<double> buff;
 
@@ -80,23 +80,27 @@ std::map <std::string, double> archivo;
 // }
 
 auto lectura(std::string path) {
-    std::map<std::string, double> map_tmp;
+    std::map<double, std::string> map_tmp;
     std::string file_path = path;
     std::ifstream csv;
     csv.open(file_path);
     std::string line;
     //getline(csv, line);
+    double sm = 0;
     while (csv.peek() != EOF) {
         getline(csv, line);
         line.erase(std::remove(line.begin(), line.end(), '\n'), line.end());
         //size_t position = line.find(";") + 1;
-        std::string key_k = line.substr(line.find("[")+1, line.find("]")-20);
-        std::cout << "\n EXTRACTO= " << key_k;
+        std::string ext = line.substr(line.find(":")+1, 2);
+        std::cout << "\n EXTRACTO= " << ext;
+        std::cout << "\n CONTADOR " << sm;
+        map_tmp.insert(std::pair<double, std::string>(sm, ext));
         // std::string key_v = line.substr(position);
         // key_k.erase(std::remove(key_k.begin(), key_k.end(), '\"'), key_k.end());
         // key_v.erase(std::remove(key_v.begin(), key_v.end(), '\"'), key_v.end());
         // double key_vd = std::stod(key_v);
         // map_tmp.insert(std::pair<std::string, double>(key_k, key_vd));
+        sm +=1;
     }
     csv.close();
     return map_tmp;    
@@ -108,5 +112,6 @@ int main() {
     //cash = convertYear(smi, dollars);
     //linearRegression(cash, 2001);
 
+    std::cout << "\n";
     return 0;
 }
