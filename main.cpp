@@ -36,14 +36,26 @@ void display(const std::map<int, unsigned int>& counts) {
     std::ofstream csv;
     csv.open("resultado.csv"); //abre archivo desde ruta
     std::string line; //crea string para guardar linea de txt
-    for (auto count = counts.begin(); count != counts.end(); ++count) {
-        std::string key = std::to_string(count->first);
-        std::string value = std::to_string(count->second);
-        line = chrs(key) + ";" + value;
-        csv << line << std::endl;
-        //std::cout << "Value " << count->first << " has count "
-        //          << count->second << std::endl;
-    }
+
+#pragma omp parallel 
+            {
+#pragma omp single
+                {
+                    csv << "Hora;Cantidad" << std::endl;
+                    for (auto count = counts.begin(); count != counts.end(); ++count) {
+#pragma omp task
+                        {
+                            std::string key = std::to_string(count->first);
+                            std::string value = std::to_string(count->second);
+                            line = chrs(key) + ";" + value;
+#pragma omp critical
+                            csv << line << std::endl;
+                        }
+                        
+                    }
+                }                
+            }
+    
     csv.close();
 }
 
@@ -63,8 +75,9 @@ auto lectura(std::string path) {
     csv.close();
     return vec;     
 }
+
 int main() {
-    vectore = lectura("prueba.txt");
+    vectore = lectura("/Compartido/archivo/access.log");
     display(counter(vectore));
     return 0;
 }
