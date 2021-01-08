@@ -14,6 +14,7 @@ std::vector<int> vectore;
 std::map<int, int> user;
 std::list<double> list;
 
+// Funcion cambia formato hora 00
 std::string chrs (std::string pors) {
     int porsi = std::stoi(pors);
     if (porsi < 10) {
@@ -22,16 +23,17 @@ std::string chrs (std::string pors) {
     return pors;
 }
 
+// Funcion compara y cuenta registros por hora
 std::map<int, unsigned int> counter(const std::vector<int>& vals) {
     std::map<int, unsigned int> rv;
 
     for (auto val = vals.begin(); val != vals.end(); ++val) {
         rv[*val]++;
     }
-
     return rv;
 }
 
+// Funcion crea archivo csv a partir del mapa
 void display(const std::map<int, unsigned int>& counts) {
     std::ofstream csv;
     csv.open("resultado.csv"); //abre archivo desde ruta
@@ -61,10 +63,10 @@ void display(const std::map<int, unsigned int>& counts) {
 
 auto lectura(std::string path) {
     std::vector<int> vec;
-    std::string file_path = path; //se crea ruta
-    std::ifstream csv; // crea variable para abrir txt
-    csv.open(file_path); //abre archivo desde ruta
-    std::string line; //crea string para guardar linea de txt
+    std::string file_path = path;
+    std::ifstream csv;
+    csv.open(file_path);
+    std::string line;
     while (csv.peek() != EOF) {
         getline(csv, line);
         line.erase(std::remove(line.begin(), line.end(), '\n'), line.end());
@@ -77,7 +79,7 @@ auto lectura(std::string path) {
 }
 
 int main() {
-    vectore = lectura("/Compartido/archivo/access.log");
+    vectore = lectura("/Compartido/archivo/access.log"); // Cambiar por ruta del archivo access.log
     display(counter(vectore));
     return 0;
 }
